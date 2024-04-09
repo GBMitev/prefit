@@ -55,13 +55,12 @@ def emo(r, params):
         V = TE + (AE - TE)*(1-np.exp(exponent))**2
         return V
 
-def mlr(r, params):
+def mlr(r, params, return_C = False):
     # getting parameters
     TE, AE, RE, P = params["TE"],params["AE"],params["RE"],params["P"]
 
     B = np.array([params.get(f"B{i}",0) for i in np.arange(0,10,1)])
     C = np.array([params.get(f"C{i}",0) for i in np.arange(0,10,1)])
-
     # calculating De
     DE = AE-TE
 
@@ -102,5 +101,5 @@ def mlr(r, params):
     unscaled = (1 - U_LR*np.exp(beta*Surkus))**2
     V        = TE + DE*unscaled
 
-    return V
+    return (V, C) if return_C == True else V
 # %%
